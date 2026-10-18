@@ -6,6 +6,7 @@ import { ApifyClient } from "apify-client";
 import * as cheerio from "cheerio";
 import { z } from "zod";
 import dotenv from "dotenv";
+import { renderLanding } from "./landing.js";
 
 dotenv.config();
 
@@ -514,110 +515,16 @@ function createAdAutopsyMcpServer(clientIp: string) {
 // ============================================================================
 // 4. LIVE SAAS PRICING WEBPAGE (FOR DODO VERIFICATION + UPTIMEROBOT) & /mcp
 // ============================================================================
-app.get("/", (_req: Request, res: Response) => {
-  res.status(200).send(`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>AdAutopsy — Ad Hook & Funnel Deconstructor Plugin</title>
-      <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-    <body class="bg-slate-950 text-white font-sans min-h-screen flex flex-col justify-between">
-      <div class="max-w-5xl mx-auto px-6 py-16">
-        <div class="text-center mb-14">
-          <span class="bg-indigo-500/20 text-indigo-300 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
-            Official Grok Bot MCP Plugin (@AdAutopsy)
-          </span>
-          <h1 class="text-4xl md:text-5xl font-extrabold mt-4 tracking-tight">
-            AdAutopsy
-          </h1>
-          <p class="text-slate-400 mt-4 max-w-2xl mx-auto text-lg">
-            Discover longest-running profitable competitor ads, extract 3-second video hooks & shot-by-shot scripts, and deconstruct landing page funnels inside Grok Bot.
-          </p>
-        </div>
-
-        <div id="pricing" class="grid md:grid-cols-3 gap-8">
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 flex flex-col justify-between">
-            <div>
-              <h2 class="text-xl font-bold text-white">Growth Tier</h2>
-              <p class="text-slate-400 text-sm mt-1">For solo marketers & creators</p>
-              <div class="mt-6 mb-6">
-                <span class="text-4xl font-extrabold">$14.99</span>
-                <span class="text-slate-400">/month</span>
-              </div>
-              <ul class="space-y-3 text-sm text-slate-300 mb-8">
-                <li>✅ Scans <strong>15 active ads</strong> per query</li>
-                <li>✅ Returns <strong>Top 2</strong> longest-running winners</li>
-                <li>✅ 5 Rewritten Hooks + Shot-by-Shot Script</li>
-                <li>✅ Full Landing Page Funnel Deconstructor</li>
-                <li>✅ 1 License Activation</li>
-              </ul>
-            </div>
-            <a href="${CHECKOUT_GROWTH_URL}" target="_blank" class="block w-full text-center bg-slate-800 hover:bg-slate-700 text-white font-semibold py-3 rounded-xl transition">
-              Get Growth License Key →
-            </a>
-          </div>
-
-          <div class="bg-slate-900 border-2 border-indigo-500 rounded-2xl p-8 flex flex-col justify-between relative shadow-xl shadow-indigo-500/10">
-            <span class="absolute -top-3 right-6 bg-indigo-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-              MOST POPULAR
-            </span>
-            <div>
-              <h2 class="text-xl font-bold text-white">Pro Tier</h2>
-              <p class="text-slate-400 text-sm mt-1">For media buyers & DTC brands</p>
-              <div class="mt-6 mb-6">
-                <span class="text-4xl font-extrabold">$29.99</span>
-                <span class="text-slate-400">/month</span>
-              </div>
-              <ul class="space-y-3 text-sm text-slate-300 mb-8">
-                <li>✅ Scans <strong>30 active ads</strong> per query</li>
-                <li>✅ Returns <strong>Top 5</strong> longest-running winners</li>
-                <li>✅ Full Shot-by-Shot UGC Video Scripts</li>
-                <li>✅ Complete CRO & Wireframe Clone Specs</li>
-                <li>✅ 1 License Activation</li>
-              </ul>
-            </div>
-            <a href="${CHECKOUT_PRO_URL}" target="_blank" class="block w-full text-center bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 rounded-xl transition">
-              Get Pro License Key →
-            </a>
-          </div>
-
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 flex flex-col justify-between">
-            <div>
-              <h2 class="text-xl font-bold text-white">Agency Tier</h2>
-              <p class="text-slate-400 text-sm mt-1">For performance agencies & teams</p>
-              <div class="mt-6 mb-6">
-                <span class="text-4xl font-extrabold">$69.99</span>
-                <span class="text-slate-400">/month</span>
-              </div>
-              <ul class="space-y-3 text-sm text-slate-300 mb-8">
-                <li>✅ Scans <strong>50 active ads</strong> per query</li>
-                <li>✅ Returns <strong>Top 10</strong> longest-running winners</li>
-                <li>✅ Full Landing Page Funnel Deconstructor</li>
-                <li>✅ Priority Deep Funnel Extraction</li>
-                <li>✅ <strong>5 Team License Activations</strong></li>
-              </ul>
-            </div>
-            <a href="${CHECKOUT_AGENCY_URL}" target="_blank" class="block w-full text-center bg-slate-800 hover:bg-slate-700 text-white font-semibold py-3 rounded-xl transition">
-              Get Agency License Key →
-            </a>
-          </div>
-        </div>
-
-        <div class="mt-12 bg-slate-900/60 border border-slate-800 rounded-xl p-6 text-center text-sm text-slate-400">
-          <strong>Instant Digital Delivery:</strong> Upon purchase via Dodo Payments, your License Key is displayed immediately and emailed to you. Enter your key inside any AdAutopsy prompt in Grok Bot to unlock your tier.
-        </div>
-      </div>
-
-      <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-500">
-        AdAutopsy (@AdAutopsy) • MCP Endpoint: <code>/mcp</code> • Terms & Support: GitHub @AdAutopsy • Status: Online
-      </footer>
-    </body>
-    </html>
-  `);
-});
+   app.get("/", (req: Request, res: Response) => {
+     res.status(200).send(
+       renderLanding({
+         growth: CHECKOUT_GROWTH_URL,
+         pro: CHECKOUT_PRO_URL,
+         agency: CHECKOUT_AGENCY_URL,
+         baseUrl: `${req.protocol}://${req.get("host")}`,
+       })
+     );
+   });
 
 app.get("/health-check", (_req: Request, res: Response) => {
   res.status(200).json({
