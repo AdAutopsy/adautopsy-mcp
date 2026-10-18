@@ -6,7 +6,7 @@ import { ApifyClient } from "apify-client";
 import * as cheerio from "cheerio";
 import { z } from "zod";
 import dotenv from "dotenv";
-import { renderLanding } from "./landing.js";
+import { renderLanding } from "./landing.ts";
 
 dotenv.config();
 
