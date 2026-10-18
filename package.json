@@ -1,7 +1,7 @@
 {
-  "name": "hookvault-mcp",
+  "name": "adautopsy-mcp",
   "version": "1.0.0",
-  "description": "HookVault — Ad Hook & Funnel Deconstructor MCP Server for Grok Bot Marketplace",
+  "description": "AdAutopsy — Ad Hook & Funnel Deconstructor MCP Server for Grok Bot Marketplace",
   "type": "module",
   "scripts": {
     "start": "tsx server.ts"
