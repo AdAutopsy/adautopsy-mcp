@@ -75,7 +75,7 @@ interface TierConfig {
 }
 
 const TIER_SPECS: Record<TierLevel, TierConfig> = {
-  FREE: { tier: "FREE", rawScanLimit: 5, maxAnalysesPerScan: 1, scansPerDay: 0, fullFunnelAccess: false },
+  FREE: { tier: "FREE", rawScanLimit: 10, maxAnalysesPerScan: 1, scansPerDay: 0, fullFunnelAccess: false },
   GROWTH: { tier: "GROWTH", rawScanLimit: 12, maxAnalysesPerScan: 2, scansPerDay: 8, fullFunnelAccess: true },
   PRO: { tier: "PRO", rawScanLimit: 20, maxAnalysesPerScan: 3, scansPerDay: 10, fullFunnelAccess: true },
   AGENCY: { tier: "AGENCY", rawScanLimit: 30, maxAnalysesPerScan: 3, scansPerDay: 18, fullFunnelAccess: true },
